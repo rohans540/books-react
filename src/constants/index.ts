@@ -1,0 +1,1 @@
+export const BOOKS_API_URL = "https://my-json-server.typicode.com/cutamar/mock/books";

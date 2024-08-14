@@ -1,0 +1,55 @@
+.cardContainer {
+    background-image: url('../assets/images/bg-blur.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 1.25rem;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 1rem;
+    border: 1px solid $primary;
+    width: 270px;
+
+    @media (min-width: 768px) {
+        min-width: 200px; 
+        min-height: 300px;
+    }
+
+    .coverContainer {
+        width: 100%;
+        position: relative;
+        height: 230px;
+    }
+    .fullCover {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 1rem;
+    }
+
+    .bookInfo {
+        // margin-top: 1.25rem;
+        .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $primary;
+        }
+        .author {
+            font-weight: 600;
+            color: $primary;
+            font-size: 1rem;
+        }
+        .date {
+            margin-top: 0.5rem;
+            font-size: 14px;
+            color: $primary;
+        }
+        .desc {
+            margin-top: 0.5rem;
+            font-size: 14px;
+        }
+    }
+
+}
