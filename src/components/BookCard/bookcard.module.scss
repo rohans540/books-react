@@ -35,6 +35,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: $primary;
+            text-decoration: underline;
         }
         .author {
             font-weight: 600;
@@ -49,6 +50,21 @@
         .desc {
             margin-top: 0.5rem;
             font-size: 14px;
+            color: $primary;
+            font-family: var(--font-code);
+            cursor: pointer;
+            float: right;
+        }
+        .cardNavWrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 250px;
+            align-items: center;
+        }
+        .heartImg {
+            width: 23px;
+            height: 23px;
+            cursor: pointer;
         }
     }
 

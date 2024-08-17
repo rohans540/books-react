@@ -1,0 +1,51 @@
+.textArea {
+    padding: 10px;
+    outline: none;
+    border: 1px solid $primary;
+    border-radius: 10px;
+    width: 80%;
+    height: 150px;
+    @media (min-width: 640px) {
+        padding: 15px;
+      }
+    font-family: var(--font-inter);
+    color: $primary;
+    font-size: 14px;
+    ::placeholder {
+        color: #4b5264;
+    }
+}
+
+.inputStyle {
+    padding: 10px;
+    @media (min-width: 640px) {
+        padding: 0px 15px;
+    }
+    outline: none;
+    border: 1px solid $primary;
+    background-color: #ffffff;
+    color: $primary;
+    font-family: var(--font-inter);
+    font-size: 14px;
+    border-radius: 10px;
+    height: 70px;
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    ::placeholder {
+        color: #4b5264;
+        font-weight: 300;
+    }
+
+    &.error {
+        border-color: #ef4444;
+    }
+}
+.errorStyle {
+    color: #ef4444;
+    font-size: 0.875rem;
+    display: flex;
+    width: 200px;
+    height: 30px;
+}

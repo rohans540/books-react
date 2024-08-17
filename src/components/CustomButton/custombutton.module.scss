@@ -1,0 +1,25 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    color: $primary;
+    font-size: medium;
+    font-weight: 600;
+    min-width: 100px;
+    height: 2.5rem;
+    margin: 10 0px;
+    border-radius: 10px;
+    padding: 0 1.25;
+    border: 1px solid $primary;
+    cursor: pointer;
+}
+
+.btn:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  background-color: $primary;
+  color: white;
+  transition-property: all;
+  transition-duration: 500ms;
+  transition-timing-function: ease-in-out;
+}
