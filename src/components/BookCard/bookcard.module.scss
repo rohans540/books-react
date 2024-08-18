@@ -35,7 +35,6 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: $primary;
-            text-decoration: underline;
         }
         .author {
             font-weight: 600;
@@ -54,6 +53,7 @@
             font-family: var(--font-code);
             cursor: pointer;
             float: right;
+            text-decoration: underline;
         }
         .cardNavWrapper {
             display: flex;

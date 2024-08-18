@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "@pages/Home";
-import BookDetails from '@pages/BookDetails';
+import Home from "@pages/Home/Home";
+import BookDetails from '@pages/BookDetails/BookDetails';
 
 
 

@@ -1,0 +1,67 @@
+.bookDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .mainContent {
+        display: flex;
+        width: 100%;
+        gap: 5rem;
+        justify-content: space-between;
+        padding: 4rem;
+        align-items: flex-start;
+    }
+
+    .actions {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        .backBtn {
+            color: $primary;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    }
+
+    .coverContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid $primary;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+    .infoContainer {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: $primary;
+    }
+    .author {
+        font-weight: 600;
+        color: $primary;
+        font-size: 1.5rem;
+    }
+    .date {
+        margin-top: 0.5rem;
+        font-size: 1.5rem;
+        color: $primary;
+    }
+    .desc {
+        font-size: 1.2rem;
+        color: $primary;
+        font-family: var(--font-inter);
+        cursor: pointer;
+        float: right;
+    }
+}

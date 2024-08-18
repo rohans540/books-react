@@ -5,7 +5,7 @@ import styles from './home.module.scss';
 
 const Home = () => {
   const { books, setBooks, currentPage, totalPages, goToNextPage, goToPreviousPage } = useGetBooksList(5);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState({ visible: false, type: '' });
   const addToFavourites = (bookId: string) => {
     const favouritesString = localStorage.getItem('favourites');
     let favourites: string[] = favouritesString ? JSON.parse(favouritesString) : [];
@@ -30,12 +30,12 @@ const Home = () => {
         <h2 className={styles.heading}>Books</h2>
         <CustomButton 
           title='Create new'
-          handleClick={() => setIsVisible(true)}
+          handleClick={() => setIsVisible(prev => ({ ...prev, visible: true }))}
           btnType='button'
         />
       </div>
       <div className={styles.cardContainer}>
-        {books && books.length && books.map((book, index) => (
+        {books && books.map((book, index) => (
           <BookCard 
             key={book?.id}
             addToFavourites={addToFavourites}
@@ -63,7 +63,7 @@ const Home = () => {
       </div>
       <PopForm 
         isVisible={isVisible}
-        onClose={() => setIsVisible(false)}
+        onClose={() => setIsVisible((prev) => ({ ...prev, visible: false }))}
         setBooks={setBooks}
       />
     </div>

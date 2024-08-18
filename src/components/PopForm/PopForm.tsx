@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CustomInput from '@components/CustomInput/CustomInput';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './popform.module.scss';
 import Custombutton from '@components/CustomButton/CustomButton';
 
 interface PopoverModalProps {
-  isVisible: boolean;
+  isVisible: object;
   onClose: () => void;
   setBooks: React.MouseEventHandler<HTMLButtonElement>;
+  bookData?: object;
 }
 
 interface BookFormInputs {
@@ -18,7 +19,7 @@ interface BookFormInputs {
   publicationDate: string;
 }
 
-const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks }) => {
+const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks, bookData }) => {
   const {
     register,
     handleSubmit,
@@ -26,13 +27,31 @@ const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks }) 
     formState: { errors },
   } = useForm<BookFormInputs>();
 
-  if (!isVisible) return null;
+  useEffect(() => {
+    if (bookData) {
+      reset(bookData);
+    }
+  }, [bookData, reset]);
+
+  if (!isVisible?.visible) return null;
 
   const onSubmit: SubmitHandler<BookFormInputs> = (data) => {
-    setBooks((prevBooks) => {
-        const newBooks = [...prevBooks, { ...data, id: prevBooks.length+1 }]
-        return newBooks;
-    })
+    if (isVisible.type === 'edit') {
+      setBooks((prevBooks) => {
+        return prevBooks.map((book) =>
+          book.id === data.id ? { ...book, ...data } : book
+        );
+      });
+    } else {
+      setBooks((prevBooks) => {
+        const newBook = {
+          ...data,
+          id: prevBooks.length > 0 ? prevBooks[prevBooks.length - 1].id + 1 : 1,
+          createdByUser: true,
+        };
+        return [...prevBooks, newBook];
+      });
+    }
     onClose();
     reset();
   };
@@ -43,7 +62,7 @@ const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks }) 
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
-        <h2 className={styles.heading}>Add new book</h2>
+        <h2 className={styles.heading}>{ isVisible?.type === 'edit' ? 'Edit book' : 'Create new book' }</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CustomInput
             inputType="text"
@@ -81,7 +100,7 @@ const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks }) 
             <Custombutton 
                 btnType='submit'
                 handleClick={() => {}}
-                title='Add'
+                title={isVisible?.type === 'edit' ? 'Save' : 'Create'}
             />
           </div>
         </form>
