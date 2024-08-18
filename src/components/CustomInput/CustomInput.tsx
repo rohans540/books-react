@@ -1,49 +1,51 @@
-import React from 'react';
-import styles from './custominput.module.scss'
+import React, { forwardRef, Ref } from 'react';
+import styles from './custominput.module.scss';
 
 interface Props {
-    value: string;
-    handleChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-    inputType: string;
-    name: string;
-    placeHolder: string;
-    isTextArea?: boolean;
-    error?: string;
-    onBlur?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-    max?: string;
+  inputType: string;
+  name: string;
+  placeHolder: string;
+  isTextArea?: boolean;
+  error?: string;
+  onBlur?: React.FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  max?: string;
 }
 
-const CustomInput = ({ value, handleChange, inputType, name, placeHolder, isTextArea, error = '', onBlur = () => {}, max }: Props) => {
-  if(isTextArea) {
-    return (
-      <textarea 
-            required
-            value={value}
-            onChange={handleChange}
-            rows={5}
-            name={name}
-            placeholder={placeHolder}
-            className={styles.textArea}
-          />
-    )
-  } else {
-    return (
-      <>
-        <input 
-            className={styles.inputStyle}
-            required
-            value={value}
-            onChange={handleChange}
+const CustomInput = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  Props
+>(
+  (
+    { inputType, name, placeHolder, isTextArea, error = '', max, onBlur },
+    ref
+  ) => {
+    if (isTextArea) {
+      return (
+        <textarea
+          ref={ref as Ref<HTMLTextAreaElement>}
+          name={name}
+          placeholder={placeHolder}
+          className={styles.textArea}
+          onBlur={onBlur}
+        />
+      );
+    } else {
+      return (
+        <>
+          <input
+            ref={ref as Ref<HTMLInputElement>}
             type={inputType}
             name={name}
             placeholder={placeHolder}
+            className={styles.inputStyle}
+            max={inputType === 'date' ? max : ''}
             onBlur={onBlur}
-            max={inputType === 'date' ? max : ""}
-        />
-        {error && <p className={styles.errorStyle}>{error}</p>}
-      </>
-    )
+          />
+          {error && <p className={styles.errorStyle}>{error}</p>}
+        </>
+      );
+    }
   }
-}
+);
 
 export default CustomInput;

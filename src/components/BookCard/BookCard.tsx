@@ -29,7 +29,6 @@ const BookCard: React.FC<BookCardType> = ({ id, title, author, description, cove
       <div className={styles.bookInfo}>
         <h5 className={styles.title}>{title}</h5>
         <p className={styles.author}>{"By "+ author}</p>
-        {/* <p className={styles.date}>{"Published: "+formatDate(publicationDate)}</p> */}
         <div className={styles.cardNavWrapper}>
           <img 
             src={likeIcon}
