@@ -16,7 +16,7 @@ const CustomInput = forwardRef<
   Props
 >(
   (
-    { inputType, name, placeHolder, isTextArea, error = '', max, onBlur },
+    { inputType, name, placeHolder, isTextArea, error = '', max = '', onBlur },
     ref
   ) => {
     if (isTextArea) {

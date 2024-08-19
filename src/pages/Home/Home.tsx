@@ -1,28 +1,27 @@
-import { BookCard, CustomButton, PopForm } from '@components/index'
+import { BookCard, CustomButton, PopForm, Loader } from '@components/index'
 import React, { useState } from 'react'
+import { VisibilityState } from '@assets/types'
 import useGetBooksList from 'src/hooks/useGetBooksList'
 import styles from './home.module.scss';
 
-const Home = () => {
-  const { books, setBooks, currentPage, totalPages, goToNextPage, goToPreviousPage } = useGetBooksList(5);
-  const [isVisible, setIsVisible] = useState({ visible: false, type: '' });
+const Home: React.FC = () => {
+  const { books, setBooks, currentPage, totalPages, goToNextPage, goToPreviousPage, loading } = useGetBooksList(5);
+  const [isVisible, setIsVisible] = useState<VisibilityState>({ visible: false, type: '' });
+
   const addToFavourites = (bookId: string) => {
     const favouritesString = localStorage.getItem('favourites');
     let favourites: string[] = favouritesString ? JSON.parse(favouritesString) : [];
-
-  if (favourites.includes(bookId)) {
-    favourites = favourites.filter(id => id !== bookId);
-  } else {
-    favourites.push(bookId);
-  }
-
-  localStorage.setItem('favourites', JSON.stringify(favourites));
-
-  setBooks(prevBooks =>
-    prevBooks.map(book =>
-      book.id === bookId ? { ...book, liked: !book.liked } : book
-    )
-  );
+    if (favourites.includes(bookId)) {
+      favourites = favourites.filter(id => id !== bookId);
+    } else {
+      favourites.push(bookId);
+    }
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+    setBooks(prevBooks =>
+      prevBooks.map(book =>
+        book.id === bookId ? { ...book, liked: !book.liked } : book
+      )
+    );
 }
   return (
     <div className={styles.homeContainer}>
@@ -35,7 +34,7 @@ const Home = () => {
         />
       </div>
       <div className={styles.cardContainer}>
-        {books && books.map((book, index) => (
+        {books && books.map((book) => (
           <BookCard 
             key={book?.id}
             addToFavourites={addToFavourites}
@@ -66,6 +65,7 @@ const Home = () => {
         onClose={() => setIsVisible((prev) => ({ ...prev, visible: false }))}
         setBooks={setBooks}
       />
+      <Loader isOpen={loading} />
     </div>
   )
 }

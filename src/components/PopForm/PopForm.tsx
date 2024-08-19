@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { Book, VisibilityState, BookState } from '@assets/types';
 import CustomInput from '@components/CustomInput/CustomInput';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './popform.module.scss';
 import Custombutton from '@components/CustomButton/CustomButton';
 
 interface PopoverModalProps {
-  isVisible: object;
+  isVisible: VisibilityState;
   onClose: () => void;
-  setBooks: React.MouseEventHandler<HTMLButtonElement>;
-  bookData?: object;
+  setBooks:  React.Dispatch<React.SetStateAction<Book[]>>;
+  bookData?: BookState;
+  setCurrentBook?: React.Dispatch<React.SetStateAction<BookState>>;
 }
 
 interface BookFormInputs {
+  id: string;
   title: string;
   author: string;
   cover: string;
@@ -19,7 +23,7 @@ interface BookFormInputs {
   publicationDate: string;
 }
 
-const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks, bookData }) => {
+const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks, bookData, setCurrentBook = () => {} }) => {
   const {
     register,
     handleSubmit,
@@ -39,18 +43,22 @@ const PopForm: React.FC<PopoverModalProps> = ({ isVisible, onClose, setBooks, bo
     if (isVisible.type === 'edit') {
       setBooks((prevBooks) => {
         return prevBooks.map((book) =>
-          book.id === data.id ? { ...book, ...data } : book
+          book.id === data.id ? { ...book, ...data, liked: book.liked ?? false } : book
         );
       });
+      setCurrentBook((prev) => ({ ...prev, ...data, liked: prev?.liked ?? false }))
+      toast.success("Book successfully edited")
     } else {
       setBooks((prevBooks) => {
         const newBook = {
           ...data,
-          id: prevBooks.length > 0 ? prevBooks[prevBooks.length - 1].id + 1 : 1,
+          id: (prevBooks.length > 0 ? (parseInt(prevBooks[prevBooks.length - 1].id) + 1).toString() : '1'),
           createdByUser: true,
+          liked: false,
         };
         return [...prevBooks, newBook];
       });
+      toast.success("Book successfully created")
     }
     onClose();
     reset();

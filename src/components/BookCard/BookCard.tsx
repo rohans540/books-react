@@ -1,21 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { BookCardType } from "@assets/types";
 import styles from './bookcard.module.scss';
 import heart from '@assets/icons/heart.png';
 import redheart from '@assets/icons/redheart.png';
 
-type BookCardType = {
-    id: number;
-    title: string;
-    author: string;
-    cover: string;
-    description: string;
-    publicationDate: string;
-    addToFavourites: (id: number) => void;
-    liked: boolean;
-    createdByUser?: boolean;
-    bookData?: any;
-}
 
 const BookCard: React.FC<BookCardType> = ({ id, title, author, cover, description, publicationDate, addToFavourites, liked, createdByUser }) => {
   const navigate = useNavigate();

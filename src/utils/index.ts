@@ -1,5 +1,5 @@
-export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
+export function formatDate(dateString: string | undefined): string {
+  const date = new Date(dateString || '');
 
   const day = date.getDate();
   const month = date.toLocaleString('en-US', { month: 'long' });

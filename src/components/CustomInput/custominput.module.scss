@@ -5,9 +5,7 @@
     border-radius: 10px;
     width: 80%;
     height: 150px;
-    @media (min-width: 640px) {
-        padding: 15px;
-      }
+    padding: 15px;
     font-family: var(--font-inter);
     color: $primary;
     font-size: 14px;
@@ -17,10 +15,7 @@
 }
 
 .inputStyle {
-    padding: 10px;
-    @media (min-width: 640px) {
-        padding: 0px 15px;
-    }
+    padding: 0px 15px;
     outline: none;
     border: 1px solid $primary;
     background-color: #ffffff;
