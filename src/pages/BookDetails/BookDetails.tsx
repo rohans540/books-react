@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { BookState } from '@assets/types';
 import toast from 'react-hot-toast';
@@ -22,10 +22,10 @@ const emptyBookState: BookState = {
 const BookDetails: React.FC = () => {
   const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [currentBook, setCurrentBook] = useState<BookState>(null);
   const [isVisible, setIsVisible] = useState({ visible: false, type: '' });
-  
+
   const stateBook = location.state?.book;
   const createdByUser = location.state?.createdByUser;
   const { bookDetails } = useGetBookDetails(id || '', true);
@@ -34,15 +34,24 @@ const BookDetails: React.FC = () => {
   useEffect(() => {
     const bookData = stateBook || bookDetails;
     setCurrentBook(bookData);
-  }, [stateBook, bookDetails])
+  }, [stateBook, bookDetails]);
 
-  const deleteBook = () => {
+  const deleteBook = useCallback(() => {
     setBooks((prevBooks) => prevBooks.filter(book => book.id !== id));
-    setCurrentBook(emptyBookState)
-    navigate('..')
-    toast.success("Book successfully deleted")
+    setCurrentBook(emptyBookState);
+    navigate('..');
+    toast.success("Book successfully deleted");
+  }, [id, navigate, setBooks]);
 
-  }
+  const handleEditClick = useCallback(() => {
+    setIsVisible(prev => ({ ...prev, visible: true, type: 'edit' }));
+  }, []);
+
+  const handleClosePopForm = useCallback(() => {
+    setIsVisible(prev => ({ ...prev, visible: false, type: '' }));
+  }, []);
+
+  const formattedDate = useMemo(() => formatDate(currentBook?.publicationDate), [currentBook?.publicationDate]);
 
   return (
     <div className={styles.bookDetailsContainer}>
@@ -50,43 +59,43 @@ const BookDetails: React.FC = () => {
         <Link to=".." className={styles.backBtn}>{`< back`}</Link>
         {createdByUser && (
           <div className={styles.btnTray}>
-          <CustomButton 
-            title='Edit'
-            handleClick={() => setIsVisible((prev) => ({ ...prev, visible: true, type: 'edit' }))}
-            btnType='button'
-          />
-          <CustomButton 
-            title='Delete'
-            handleClick={deleteBook}
-            btnType='button'
+            <CustomButton 
+              title='Edit'
+              handleClick={handleEditClick}
+              btnType='button'
             />
-        </div>
+            <CustomButton 
+              title='Delete'
+              handleClick={deleteBook}
+              btnType='button'
+            />
+          </div>
         )}
       </div>
       <div className={styles.mainContent}>
         <div className={styles.coverContainer}>
-            <img 
-              src={currentBook?.cover}
-              alt={currentBook?.title}
-              className=''
-            />
+          <img 
+            src={currentBook?.cover}
+            alt={currentBook?.title}
+            className=''
+          />
         </div>
         <div className={styles.infoContainer}>
           <h2 className={styles.title}>Title: {currentBook?.title}</h2>
           <h5 className={styles.author}>Written by: {currentBook?.author}</h5>
-          <h6 className={styles.date}>Published: {formatDate(currentBook?.publicationDate)}</h6>
+          <h6 className={styles.date}>Published: {formattedDate}</h6>
           <p className={styles.desc}>{currentBook?.description}</p>
         </div>
       </div>
       <PopForm 
         isVisible={isVisible}
-        onClose={() => setIsVisible((prev) => ({ ...prev, visible: false, type: '' }))}
+        onClose={handleClosePopForm}
         setBooks={setBooks}
         bookData={currentBook}
         setCurrentBook={setCurrentBook}
       />
     </div>
-  )
+  );
 }
 
 export default BookDetails;
