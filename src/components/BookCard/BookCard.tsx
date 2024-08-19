@@ -37,7 +37,7 @@ const BookCard: React.FC<BookCardType> = ({ id, title, author, cover, descriptio
             className={styles.heartImg}
             onClick={() => addToFavourites(id)}
           />
-          <p className={styles.desc} onClick={() => navigate(`/books/${id}`, { state: { book: bookData, createdByUser } })}>
+          <p className={styles.desc} onClick={() => navigate(`/${id}`, { state: { book: bookData, createdByUser } })}>
             {`Explore more >`}
           </p>
         </div>
