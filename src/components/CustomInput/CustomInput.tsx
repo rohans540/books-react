@@ -8,7 +8,7 @@ interface Props {
   isTextArea?: boolean;
   error?: string;
   onBlur?: React.FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  max?: string;
+  max?: string | number | undefined;
 }
 
 const CustomInput = forwardRef<
