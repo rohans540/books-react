@@ -55,3 +55,5 @@ Steps to setup App locally:
 2. Go to book-react directory, open terminal and run command 'yarn'. This will install dependencies.
 3. Once dependencies are installed run command yarn dev and open your browser and go to localhost:3000 in your browser.
 4. Can see the app now. The list of books and a create new book button. Play around.
+
+Note: You can also see the deployed website here: https://rohans540.github.io/books-react/
